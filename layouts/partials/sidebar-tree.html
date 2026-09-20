@@ -1,0 +1,27 @@
+<ul class="tree-menu {{ if .IsHome }}tree-root{{ end }}">
+    {{ $currentPage := $ }}
+    {{ range .Pages.ByWeight }}
+        {{ $isActive := $currentPage.IsDescendant . }}
+        {{ $isCurrent := eq $currentPage . }}
+        {{ $hasChildren := gt (len .Pages) 0 }}
+        
+        <li class="tree-item {{ if $isActive }}active{{ end }} {{ if $isCurrent }}current{{ end }} {{ if $hasChildren }}has-children{{ end }}">
+            <div class="tree-item-content">
+                {{ if $hasChildren }}
+                <button class="tree-toggle" aria-expanded="{{ if or $isActive $isCurrent }}true{{ else }}false{{ end }}" aria-label="Toggle children">
+                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="chevron"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+                {{ else }}
+                <span class="tree-toggle empty"></span>
+                {{ end }}
+                <a href="{{ .RelPermalink }}" class="tree-link">{{ .Title }}</a>
+            </div>
+            
+            {{ if $hasChildren }}
+                <div class="tree-children" {{ if not (or $isActive $isCurrent) }}style="display: none;"{{ end }}>
+                    {{ partial "sidebar-tree.html" . }}
+                </div>
+            {{ end }}
+        </li>
+    {{ end }}
+</ul>

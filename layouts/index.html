@@ -1,0 +1,92 @@
+{{ define "main" }}
+<div class="home-container">
+    <div class="home-hero">
+        <h1>{{ .Title }}</h1>
+        <p>{{ .Params.description }}</p>
+        <div class="badges">
+            {{ range .Params.badges }}
+            <span class="badge">{{ . }}</span>
+            {{ end }}
+        </div>
+    </div>
+
+    <div class="home-stats">
+        {{ range .Params.stats }}
+        <div class="stat-card">
+            <h3>{{ .value }}</h3>
+            <p>{{ .label }}</p>
+        </div>
+        {{ end }}
+    </div>
+
+    <div class="profile-card">
+        <div class="profile-info">
+            <h3>{{ .Params.profile.title }}</h3>
+            <div class="info-grid">
+                <!-- Data driven profile fields based on language -->
+                {{ if eq .Site.Language.Lang "vi" }}
+                    <span class="info-label">Họ và tên:</span>
+                {{ else }}
+                    <span class="info-label">Full Name:</span>
+                {{ end }}
+                <span class="info-value">{{ .Params.profile.name }}</span>
+                
+                {{ if eq .Site.Language.Lang "vi" }}
+                    <span class="info-label">Điện thoại:</span>
+                {{ else }}
+                    <span class="info-label">Phone:</span>
+                {{ end }}
+                <span class="info-value">{{ .Params.profile.phone }}</span>
+                
+                <span class="info-label">Email:</span>
+                <span class="info-value"><a href="mailto:{{ .Params.profile.email }}">{{ .Params.profile.email }}</a></span>
+                
+                {{ if eq .Site.Language.Lang "vi" }}
+                    <span class="info-label">Đại học:</span>
+                {{ else }}
+                    <span class="info-label">University:</span>
+                {{ end }}
+                <span class="info-value">{{ .Params.profile.university }}</span>
+                
+                {{ if eq .Site.Language.Lang "vi" }}
+                    <span class="info-label">Chuyên ngành:</span>
+                {{ else }}
+                    <span class="info-label">Major:</span>
+                {{ end }}
+                <span class="info-value">{{ .Params.profile.major }}</span>
+                
+                {{ if eq .Site.Language.Lang "vi" }}
+                    <span class="info-label">Tổ chức:</span>
+                {{ else }}
+                    <span class="info-label">Organization:</span>
+                {{ end }}
+                <span class="info-value">{{ .Params.profile.company }}</span>
+                
+                {{ if eq .Site.Language.Lang "vi" }}
+                    <span class="info-label">Vị trí:</span>
+                {{ else }}
+                    <span class="info-label">Position:</span>
+                {{ end }}
+                <span class="info-value">{{ .Params.profile.position }}</span>
+            </div>
+        </div>
+        <div class="profile-avatar">
+            <img src="{{ "images/avatar.jpg" | relURL }}" alt="Profile Picture" onerror="this.src='https://ui-avatars.com/api/?name=Trinh+Cong+Khanh&background=f1f5f9&color=2563eb&size=250&font-size=0.33&bold=true'">
+        </div>
+    </div>
+
+    <div class="prose">
+        <h2>{{ .Params.report_title }}</h2>
+    </div>
+    <div class="section-list">
+        {{ range .Site.Home.Pages.ByWeight }}
+        <a href="{{ .RelPermalink }}" class="section-card">
+            <h3>{{ .Title }}</h3>
+            {{ if .Description }}
+            <p>{{ .Description }}</p>
+            {{ end }}
+        </a>
+        {{ end }}
+    </div>
+</div>
+{{ end }}

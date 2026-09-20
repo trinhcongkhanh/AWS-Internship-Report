@@ -1,0 +1,8 @@
+<div class="lang-switcher">
+    {{ $pageLang := .Page.Language.Lang }}
+    {{ range .Page.AllTranslations }}
+        <a href="{{ .Permalink }}" class="lang-btn {{ if eq .Language.Lang $pageLang }}active{{ end }}" title="{{ .Language.Label }}">
+            {{ .Language.Lang | upper }}
+        </a>
+    {{ end }}
+</div>

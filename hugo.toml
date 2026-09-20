@@ -1,0 +1,28 @@
+baseURL = "/"
+title = "AWS Cloud Internship"
+defaultContentLanguage = "en"
+
+[languages]
+  [languages.en]
+    title = "AWS Cloud Internship Report"
+    weight = 1
+    locale = "en"
+    label = "English"
+    [languages.en.params]
+      description = "Documenting my AWS Cloud Internship Journey"
+
+  [languages.vi]
+    title = "Báo Cáo Thực Tập AWS Cloud"
+    weight = 2
+    locale = "vi"
+    label = "Tiếng Việt"
+    [languages.vi.params]
+      description = "Tài liệu ghi chép hành trình thực tập AWS Cloud"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[params]
+  author = "Trinh Cong Khanh"

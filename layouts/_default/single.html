@@ -1,0 +1,23 @@
+{{ define "main" }}
+<!-- Floating Navigation -->
+<div class="floating-nav">
+    {{ if .NextInSection }}
+    <a href="{{ .NextInSection.RelPermalink }}" class="float-btn float-prev" title="Previous: {{ .NextInSection.Title }}" aria-label="Previous page">
+        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </a>
+    {{ end }}
+    
+    {{ if .PrevInSection }}
+    <a href="{{ .PrevInSection.RelPermalink }}" class="float-btn float-next" title="Next: {{ .PrevInSection.Title }}" aria-label="Next page">
+        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </a>
+    {{ end }}
+</div>
+
+<article class="prose">
+    {{ if not .IsHome }}
+    <h1>{{ .Title }}</h1>
+    {{ end }}
+    {{ .Content }}
+</article>
+{{ end }}

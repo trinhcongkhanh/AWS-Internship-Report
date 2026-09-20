@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.Lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ if not .IsHome }}{{ .Title }} | {{ end }}{{ .Site.Title }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ "css/style.css" | relURL }}?v={{ now.Unix }}">
+    <script>
+        const storedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (storedTheme === 'dark' || (!storedTheme && prefersDark)) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+    </script>
+</head>
+<body>
+    <div class="layout-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>{{ .Site.Title }}</h2>
+            </div>
+            <nav class="sidebar-nav">
+                {{ partial "sidebar-tree.html" .Site.Home }}
+            </nav>
+            {{ partial "theme-lang-controls.html" . }}
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-wrapper">
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="mobile-menu-toggle" id="menu-toggle" aria-label="Toggle Menu">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                    </button>
+                    {{ if not .IsHome }}
+                    <div class="breadcrumbs">
+                        <a href="{{ .Site.Home.RelPermalink }}">Home</a> 
+                        {{ range .Ancestors.Reverse }}
+                            <span>/</span> <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                        {{ end }}
+                        <span>/</span> <span class="current">{{ .Title }}</span>
+                    </div>
+                    {{ end }}
+                </div>
+                <div class="header-right">
+                    <!-- Language switcher moved to bottom-left floating controls -->
+                </div>
+            </header>
+
+            <div class="content-container">
+                {{ block "main" . }}{{ end }}
+            </div>
+            
+            <footer class="site-footer">
+                <p>&copy; {{ now.Format "2006" }} {{ .Site.Params.author }}.</p>
+            </footer>
+        </main>
+    </div>
+    
+    <!-- Overlay for mobile sidebar -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <script src="{{ "js/main.js" | relURL }}"></script>
+</body>
+</html>
